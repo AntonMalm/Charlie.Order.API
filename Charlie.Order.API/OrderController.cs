@@ -19,10 +19,10 @@ public class OrderController : ControllerBase
     {
         var result = await _orderService.CreateOrderAsync(orderRequest);
 
-        if (!result.Success)
-        {
-            return StatusCode(500, result.Message); // Eller använd en annan statuskod
-        }
+        //if (!result.Success)
+        //{
+        //    return StatusCode(500, result.Message); // Eller använd en annan statuskod
+        //}
 
         return Accepted(new { Message = "Order processing started", CorrelationId = result.CorrelationId });
     }
