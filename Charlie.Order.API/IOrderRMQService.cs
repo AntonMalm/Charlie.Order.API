@@ -4,5 +4,5 @@ namespace Charlie.Order.API;
 
 public interface IOrderRMQService
 {
-    Task<OrderResponseDTO> CreateOrderAsync(OrderRequestDTO orderRequest);
+    Task CreateOrderAsync(OrderRequestDTO orderRequest);
 }

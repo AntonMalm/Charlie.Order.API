@@ -12,17 +12,20 @@ namespace Charlie.Order.API;
 public class OrderRMQService : IOrderRMQService
 {
     private readonly RMQPub _rmqPub;
-    private readonly RMQSub _rmqSub;
-    public OrderRMQService(RMQPub rmqPub, RMQSub rmqSub)
+    public OrderRMQService(RMQPub rmqPub)
     {
         _rmqPub = rmqPub;
-        _rmqSub = rmqSub;
     }
-    public Task<OrderResponseDTO> CreateOrderAsync(OrderRequestDTO orderRequest)
+    public async Task CreateOrderAsync(OrderRequestDTO orderRequest)
     {
         var message = JsonConvert.SerializeObject(orderRequest);
 
         // Assume _rabbitMQService is an instance of a RabbitMQ publishing service
-        await _rabbitMQService.PublishAsync("order_queue", message);
+
+        // Publicerar ett meddelande i payment.operations-kön
+        await _rmqPub.PublishAsync("payment.operations", message);
+
+        // Publicerar ett meddelande i order.operations-kön
+        //await _rabbitMQService.PublishAsync("order_queue", message);
     }
 }
