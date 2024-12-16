@@ -1,4 +1,5 @@
-﻿using Charlie.Order.API.Shared.DTOs;
+﻿using Charlie.Order.API.Shared.DataModels;
+using Charlie.Order.API.Shared.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Charlie.Order.API;
@@ -7,24 +8,53 @@ namespace Charlie.Order.API;
 [Route("api/[controller]")]
 public class OrderController : ControllerBase
 {
-    private readonly IOrderRMQService _orderService;
+    private readonly RabbitMqClient _rabbitMqClient;
 
-    public OrderController(IOrderRMQService orderService)
+    public OrderController(RabbitMqClient rabbitMqClient)
     {
-        _orderService = orderService;
+        _rabbitMqClient = rabbitMqClient;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateOrder([FromBody] OrderRequestDTO orderRequest)
+    [HttpGet("{ordermerId}")]
+    public async Task<IActionResult> GetOrderByIdAsync(int orderId)
     {
-        var result = await _orderService.CreateOrderAsync(orderRequest);
+        if (orderId == null)
+        {
+            return BadRequest("Customer Id is null");
+        }
 
-        //if (!result.Success)
-        //{
-        //    return StatusCode(500, result.Message); // Eller använd en annan statuskod
-        //}
+        var correlationId = Guid.NewGuid().ToString();
+        var message = new
+        {
+            CorrelationId = correlationId,
+            Operation = "Read",
+            Payload = new { OrderId = orderId }
+        };
+        await _rabbitMqClient.PublishAsync("order.operations", message);
+        return Accepted(new { Message = "Order retrieval started.", CorrelationId = correlationId });
+    }
 
-        return Accepted(new { Message = "Order processing started", CorrelationId = result.CorrelationId });
+
+    [HttpPost]
+    public async Task<IActionResult> AddCustomerAsync([FromBody] OrderModel order)
+    {
+        if (order == null)
+        {
+            return BadRequest("Customer is null");
+        }
+
+        var correlationId = Guid.NewGuid().ToString();
+
+        var message = new
+        {
+            CorrelationId = correlationId,
+            Operation = "Create",
+            Payload = order
+        };
+
+
+        await _rabbitMqClient.PublishAsync("order.operations", message);
+        return Accepted(new { Message = "Order creation started.", CorrelationId = correlationId });
     }
 }
 

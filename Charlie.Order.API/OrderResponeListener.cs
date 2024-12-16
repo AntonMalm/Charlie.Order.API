@@ -2,7 +2,7 @@
 using Charlie.Order.API;
 using Charlie.Order.API.Shared.DTOs;
 
-namespace Charlie.Customer.API
+namespace Charlie.Order.API
 {
     public class OrderResponseListener : BackgroundService
     {

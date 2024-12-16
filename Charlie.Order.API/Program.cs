@@ -1,4 +1,3 @@
-using Charlie.Customer.API;
 using Charlie.Order.API;
 
 var builder = WebApplication.CreateBuilder(args);
