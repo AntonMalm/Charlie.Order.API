@@ -21,14 +21,17 @@ namespace Charlie.Order.API
             {
                 HostName = configuration["RabbitMq:HostName"],
                 UserName = configuration["RabbitMq:UserName"],
-                Password = configuration["RabbitMq:Password"]
+                Password = configuration["RabbitMq:Password"],
+                Port = int.Parse(configuration["RabbitMq:Port"] ?? "5672"),  // Default to 5672
+                VirtualHost = configuration["RabbitMq:VirtualHost"] ?? "/"
             };
+
             _connection = await factory.CreateConnectionAsync();
             _channel = await _connection.CreateChannelAsync();
 
             AppDomain.CurrentDomain.ProcessExit += (s, e) => Dispose();
-
         }
+
 
         public async Task PublishAsync(string queueName, object message)
         {

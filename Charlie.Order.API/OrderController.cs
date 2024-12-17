@@ -15,7 +15,7 @@ public class OrderController : ControllerBase
         _rabbitMqClient = rabbitMqClient;
     }
 
-    [HttpGet("{ordermerId}")]
+    [HttpGet("{orderId}")]
     public async Task<IActionResult> GetOrderByIdAsync(int orderId)
     {
         if (orderId == null)
@@ -36,11 +36,11 @@ public class OrderController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> AddCustomerAsync([FromBody] OrderModel order)
+    public async Task<IActionResult> AddOrderAsync([FromBody] OrderModel order)
     {
         if (order == null)
         {
-            return BadRequest("Customer is null");
+            return BadRequest("Order is null");
         }
 
         var correlationId = Guid.NewGuid().ToString();
