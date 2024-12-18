@@ -17,7 +17,6 @@ namespace Charlie.Order.API
 
         public async Task InitializeAsync(IConfiguration configuration)
         {
-            var test = configuration["RabbitMq:HostName"];
             var factory = new ConnectionFactory
             {
                 HostName = configuration["RabbitMq:HostName"],

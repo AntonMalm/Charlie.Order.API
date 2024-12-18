@@ -15,10 +15,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
+    <ProjectReference Include="..\Charlie.Order.API.Shared\Charlie.Order.API.Shared.csproj" />
+
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Charlie.Order.API.Shared\Charlie.Order.API.Shared.csproj" />
-  </ItemGroup>
 
 </Project>
