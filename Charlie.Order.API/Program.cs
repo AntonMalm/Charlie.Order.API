@@ -1,3 +1,4 @@
+using Charlie.Order.API;
 using Charlie.Order.API.RMQ;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSingleton<RabbitMqClient>();
 builder.Services.AddHostedService<OrderResponseListener>(); // Bakgrundstjänst för svar
+builder.Services.AddSingleton<RabbitMqClient>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

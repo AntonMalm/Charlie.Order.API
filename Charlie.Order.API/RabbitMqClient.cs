@@ -17,13 +17,12 @@ namespace Charlie.Order.API
 
         public async Task InitializeAsync(IConfiguration configuration)
         {
+            var test = configuration["RabbitMq:HostName"];
             var factory = new ConnectionFactory
             {
                 HostName = configuration["RabbitMq:HostName"],
                 UserName = configuration["RabbitMq:UserName"],
                 Password = configuration["RabbitMq:Password"],
-                Port = int.Parse(configuration["RabbitMq:Port"] ?? "5672"),  // Default to 5672
-                VirtualHost = configuration["RabbitMq:VirtualHost"] ?? "/"
             };
 
             _connection = await factory.CreateConnectionAsync();

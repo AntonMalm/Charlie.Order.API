@@ -25,7 +25,7 @@ namespace Charlie.Order.API
 
                     if (response != null)
                     {
-                        _logger.LogInformation($"Recieved response for CorrelationId: {response.CorrelationId}, Status: {response.Status}");
+                        //_logger.LogInformation($"Recieved response for CorrelationId: {response.CorrelationId}, Status: {response.Status}");
                     }
                 }
                 catch (Exception ex)
