@@ -2,7 +2,7 @@
 
 public class OrderResponseDTO
 {
-    public string OrderId { get; set; }
-    public string CustomerId { get; set; }
-    public List<OrderProductDTO> Products { get; set; } = new();
+    public string CorrelationId { get; set; }
+    public string Status { get; set; }
+    public string Message { get; set; }
 }
