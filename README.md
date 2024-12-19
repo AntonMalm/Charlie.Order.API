@@ -59,5 +59,5 @@ This document describes the API for managing orders in the system. The API facil
 
 ## Integration Notes
 - All operations generate a unique correlation ID for tracking purposes.
-- Messages are published to the `order.operations` RabbitMQ queue.
+- Messages are published to the `order.operations` & `payment.operations` RabbitMQ queue.
 - The correlation ID and operation details are included in the published message.
